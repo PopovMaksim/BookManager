@@ -38,11 +38,23 @@ namespace BookManager
             AuthWindow authWindow = new AuthWindow();
             authWindow.ShowDialog(); // блокує основне вікно поки авторизація не завершена
         }
-    }
+
+		private void EditButton_Click(object sender, RoutedEventArgs e)
+		{
+			AddEditWindow editWindow = new AddEditWindow(false);
+			editWindow.ShowDialog();
+		}
+
+		private void AddButton_Click(object sender, RoutedEventArgs e)
+		{
+			AddEditWindow addWindow = new AddEditWindow(true);
+			addWindow.ShowDialog();
+		}
+	}
 
 
 
-    public class Book {
+	public class Book {
 		public required string code { get; set; }
 		public required string author { get; set; }
 		public required string title { get; set; }

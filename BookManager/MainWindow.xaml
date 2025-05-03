@@ -15,16 +15,29 @@
                 <DataGridTextColumn Header="Рік видання" Binding="{Binding year}" Width="*"/>
                 <DataGridTextColumn Header="Стелаж" Binding="{Binding rack}" Width="*"/>
                 <DataGridTextColumn Header="Полиця" Binding="{Binding shelf}" Width="*"/>
+                <DataGridTemplateColumn Header="" Width="Auto" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="EditButton" Background="#FFE9FF00" Click="EditButton_Click"/>
+                                <Button x:Name="DeleteButton" Background="#FFFF5252">
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
 
 
 
         </DataGrid>
+        <Button x:Name="AddButton" Content="+" UseLayoutRounding="True" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30" Width="30" Background="#FF6129C3" Foreground="AliceBlue" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Margin="0,0,949,571" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,3" Click="AddButton_Click"/>
         <Button  Content="Авторизація" Click="AuthButton_Click" UseLayoutRounding="True" HorizontalAlignment="Left" Margin="869,23,0,0" VerticalAlignment="Top" Height="43" Width="163" Background="#FF6129C3" Foreground="AliceBlue" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
         <Button  Content="Зберегти" UseLayoutRounding="True" HorizontalAlignment="Left" Margin="668,23,0,0" VerticalAlignment="Top" Height="43" Width="163" Background="#FF14D997" Foreground="AliceBlue" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
         <Expander HorizontalAlignment="Left" Height="49" Header="Пошук" Margin="881,138,0,0" VerticalAlignment="Top" Width="175" Background="LightGray" FontFamily="Agency FB" FontWeight="Bold">
             <Grid Background="#FFE5E5E5" Width="175" Margin="0,1,0,-338">
                 <Button Content="+" UseLayoutRounding="True" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Width="30" Background="#FF6129C3" Foreground="AliceBlue" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Margin="110,10,0,0" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,3"/>
+
             </Grid>
         </Expander>
 
