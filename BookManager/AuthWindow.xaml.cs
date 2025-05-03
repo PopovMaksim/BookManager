@@ -63,7 +63,7 @@ namespace BookManager
             string username = LoginTextBox.Text;
             string password = TogglePasswordVisibility.IsChecked == true ? PasswordBoxVisible.Text : PasswordBoxHidden.Password;
 
-            if (username == "admin" && password == "password")
+            if (Globals.mainAuthorization.authorize(username, password))
             {
                 MessageBox.Show("Вхід успішний!");
                 this.Close();
@@ -77,4 +77,8 @@ namespace BookManager
             }
         }
     }
+
+	
+
+
 }

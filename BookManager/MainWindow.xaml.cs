@@ -20,14 +20,18 @@ namespace BookManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
 
+		public MainWindow()
+        {
+			InitializeComponent();
+			
 			ObservableCollection<Book> books = new ObservableCollection<Book>();
 
 			books.Add(new Book { code = "2", author="dsd", title="lkfj", year="jkf", rack="skjdf", shelf="klsj"});
 			BooksGataGrid.ItemsSource = books;
+
+
+
 		}
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
@@ -45,6 +49,35 @@ namespace BookManager
 		public required string year { get; set; }
 		public required string rack { get; set; }
 		public required string shelf { get; set; }
+	}
+
+	public class Authorization
+	{
+		public Authorization()
+		{
+			authorized = false;
+		}
+		private bool authorized;
+		public bool authorize(string username, string password)
+		{
+			if (username == "admin" && password == "password")
+			{
+				authorized = true;
+			}
+			return authorized;
+		}
+
+		public void unauthorize() {
+			authorized = false;
+		}
+
+
+	}
+
+	public static class Globals
+	{
+		public static Authorization mainAuthorization = new Authorization();
+		
 	}
 
 
