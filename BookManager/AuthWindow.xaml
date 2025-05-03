@@ -1,0 +1,24 @@
+﻿<Window x:Class="BookManager.AuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Авторизація" Height="320" Width="400" Background="Azure" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Логін" FontSize="16" Margin="0,10"/>
+            <TextBox x:Name="LoginTextBox" Width="250" Height="30" Margin="0,5"/>
+
+            <TextBlock Text="Пароль" FontSize="16" Margin="0,10"/>
+            <Grid Width="250" Height="30">
+                <PasswordBox x:Name="PasswordBoxHidden" Margin="0,0,30,0" Visibility="Visible" PasswordChar="●"/>
+                <TextBox x:Name="PasswordBoxVisible" Margin="0,0,30,0" Visibility="Collapsed"/>
+                <ToggleButton x:Name="TogglePasswordVisibility" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center"
+                              Background="Transparent" BorderBrush="{x:Null}">
+                    <materialDesign:PackIcon x:Name="EyeIcon" Kind="Eye" Width="20" Height="20" Foreground="Black"/>
+                </ToggleButton>
+            </Grid>
+
+            <Button Content="Увійти" Width="250" Height="40" Margin="0,20" Background="#FF6129C3" Foreground="AliceBlue" Click="LoginButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

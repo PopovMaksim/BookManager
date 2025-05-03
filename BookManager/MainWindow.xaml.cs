@@ -29,9 +29,16 @@ namespace BookManager
 			books.Add(new Book { code = "2", author="dsd", title="lkfj", year="jkf", rack="skjdf", shelf="klsj"});
 			BooksGataGrid.ItemsSource = books;
 		}
+        private void AuthButton_Click(object sender, RoutedEventArgs e)
+        {
+            AuthWindow authWindow = new AuthWindow();
+            authWindow.ShowDialog(); // блокує основне вікно поки авторизація не завершена
+        }
     }
 
-	public class Book {
+
+
+    public class Book {
 		public required string code { get; set; }
 		public required string author { get; set; }
 		public required string title { get; set; }
@@ -39,6 +46,7 @@ namespace BookManager
 		public required string rack { get; set; }
 		public required string shelf { get; set; }
 	}
+
 
 
 
