@@ -1,0 +1,15 @@
+﻿<Window x:Class="BookManager.DeleteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Видалення" Height="320" Width="400" Background="Azure" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
+            <TextBlock Text="Ви точно хочете видалити цей запис?" FontSize="16" TextAlignment="Center" Margin="0,0,0,20"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                <Button Content="Так" Width="120" Height="40" Margin="0,0,10,0" Background="Green" Foreground="AliceBlue" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Click="YesButton_Click"/>
+                <Button Content="Ні" Width="120" Height="40" Margin="10,0,0,0" Background="Red" Foreground="AliceBlue" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Click="NoButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

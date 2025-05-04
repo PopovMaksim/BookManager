@@ -36,7 +36,7 @@ namespace BookManager
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
             AuthWindow authWindow = new AuthWindow();
-            authWindow.ShowDialog(); // блокує основне вікно поки авторизація не завершена
+            authWindow.ShowDialog();
         }
 
 		private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -50,7 +50,12 @@ namespace BookManager
 			AddEditWindow addWindow = new AddEditWindow(true);
 			addWindow.ShowDialog();
 		}
-	}
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteWindow deleteWindow = new DeleteWindow();
+            deleteWindow.ShowDialog();
+        }
+    }
 
 
 
