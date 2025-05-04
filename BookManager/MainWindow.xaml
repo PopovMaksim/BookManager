@@ -20,8 +20,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button x:Name="EditButton" Background="#FFE9FF00" Click="EditButton_Click"/>
-                                <Button x:Name="DeleteButton" Background="#FFFF5252">
-                                </Button>
+                                <Button x:Name="DeleteButton" Background="#FFFF5252" Click="DeleteButton_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
