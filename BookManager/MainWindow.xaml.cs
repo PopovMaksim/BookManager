@@ -27,7 +27,7 @@ namespace BookManager
 			
 			ObservableCollection<Book> books = new ObservableCollection<Book>();
 
-			books.Add(new Book { code = "2", author="dsd", title="lkfj", year="jkf", rack="skjdf", shelf="klsj"});
+			books.Add(new Book { code = "test", author="test", title="test", year= "test", rack= "test", shelf= "test" });
 			BooksGataGrid.ItemsSource = books;
 
 
