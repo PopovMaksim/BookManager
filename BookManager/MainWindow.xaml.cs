@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
 
 namespace BookManager
 {
@@ -24,10 +25,39 @@ namespace BookManager
 		public MainWindow()
         {
 			InitializeComponent();
-			
-			ObservableCollection<Book> books = new ObservableCollection<Book>();
+            string connectionString = "server=localhost;port=3306;user=root;password=Hkle4X!5di_3k;database=bookmanager;";
+            ObservableCollection<Book> books = new ObservableCollection<Book>();
+            using var connection = new MySqlConnection(connectionString);
 
-			books.Add(new Book { code = "test", author="test", title="test", year= "test", rack= "test", shelf= "test" });
+            try
+            {
+				connection.Open();
+                string query = "SELECT * FROM books;";
+                using var cmd = new MySqlCommand(query, connection);
+                using var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    books.Add(new Book
+                    {
+                        code = reader.GetInt32("code"),
+                        author = reader.GetString("author"),
+                        title = reader.GetString("title"),
+                        year = reader.GetInt32("year"),
+                        rack = reader.GetInt32("rack"),
+                        shelf = reader.GetInt32("shelf")
+                    });
+
+                }
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Не вдалося підключитись до бази даних. Перевірте інтернет з'єднання та спробуйте підключитися пізніше.");
+                Application.Current.Shutdown();
+            }
+			if (books == null) {
+				MessageBox.Show("В базі даних відсутня інформація про книги");
+			}
 			BooksGataGrid.ItemsSource = books;
 
 
@@ -60,12 +90,12 @@ namespace BookManager
 
 
 	public class Book {
-		public required string code { get; set; }
+		public required int code { get; set; }
 		public required string author { get; set; }
 		public required string title { get; set; }
-		public required string year { get; set; }
-		public required string rack { get; set; }
-		public required string shelf { get; set; }
+		public required int year { get; set; }
+		public required int rack { get; set; }
+		public required int shelf { get; set; }
 	}
 
 	public class Authorization
