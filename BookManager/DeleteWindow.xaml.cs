@@ -26,11 +26,12 @@ namespace BookManager
         }
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Запис видалено");
+            this.DialogResult = true;
             this.Close();
         }
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = false;
             this.Close();
         }
     }
