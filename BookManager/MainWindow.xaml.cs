@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,17 +22,22 @@ namespace BookManager
     /// </summary>
     public partial class MainWindow : Window
     {
-
-		public MainWindow()
+        ObservableCollection<Book> books = new ObservableCollection<Book>();
+        public MainWindow()
         {
 			InitializeComponent();
-            string connectionString = "server=localhost;port=3306;user=root;password=Hkle4X!5di_3k;database=bookmanager;";
-            ObservableCollection<Book> books = new ObservableCollection<Book>();
+            loadData();
+			BooksGataGrid.ItemsSource = books;
+		}
+		public void loadData()
+		{
+            books.Clear();
+            string connectionString = "server=localhost;port=3306;user=root;password=Hkle4X!5di_3;database=bookmanager;";
             using var connection = new MySqlConnection(connectionString);
 
             try
             {
-				connection.Open();
+                connection.Open();
                 string query = "SELECT * FROM books;";
                 using var cmd = new MySqlCommand(query, connection);
                 using var reader = cmd.ExecuteReader();
@@ -52,17 +58,14 @@ namespace BookManager
             }
             catch (MySqlException sqlEx)
             {
-                MessageBox.Show("Не вдалося підключитись до бази даних. Перевірте інтернет з'єднання та спробуйте підключитися пізніше.");
+                MessageBox.Show("Не вдалось отрмати доступ до бази даних з інформаціє. Перевірте підключення до мережі та перезавантажте додаток");
                 Application.Current.Shutdown();
             }
-			if (books == null) {
-				MessageBox.Show("В базі даних відсутня інформація про книги");
-			}
-			BooksGataGrid.ItemsSource = books;
-
-
-
-		}
+            if (books == null)
+            {
+                MessageBox.Show("В базі даних відсутня інформація про книги");
+            }
+        }
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
             AuthWindow authWindow = new AuthWindow();
@@ -71,19 +74,59 @@ namespace BookManager
 
 		private void EditButton_Click(object sender, RoutedEventArgs e)
 		{
-			AddEditWindow editWindow = new AddEditWindow(false);
-			editWindow.ShowDialog();
-		}
+            Button button = sender as Button;
+
+            Book selectedBook = button.DataContext as Book;
+            AddEditWindow editWindow = new AddEditWindow(selectedBook);
+            if (editWindow.ShowDialog() == true)
+            {
+                loadData();
+            }
+        }
 
 		private void AddButton_Click(object sender, RoutedEventArgs e)
 		{
-			AddEditWindow addWindow = new AddEditWindow(true);
-			addWindow.ShowDialog();
-		}
+			AddEditWindow addWindow = new AddEditWindow();
+            if (addWindow.ShowDialog() == true)
+            {
+               loadData();
+            }
+        }
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             DeleteWindow deleteWindow = new DeleteWindow();
-            deleteWindow.ShowDialog();
+            if (deleteWindow.ShowDialog() == true)
+            {
+                string connectionString = "server=localhost;port=3306;user=root;password=Hkle4X!5di_3k;database=bookmanager;";
+                using var connection = new MySqlConnection(connectionString);
+                Button button = sender as Button;
+                Book selectedBook = button.DataContext as Book;
+                try
+                {
+                    connection.Open();
+                    string deleteQuery = "DELETE FROM books WHERE code = @Code";
+                    using var command = new MySqlCommand(deleteQuery, connection);
+                    command.Parameters.AddWithValue("@Code", selectedBook.code);
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Книгу успішно видалено!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
+                        loadData();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Книгу не знайдено або вже видалена.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Помилка при видаленні: " + ex.Message, "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            
+
+
         }
     }
 
