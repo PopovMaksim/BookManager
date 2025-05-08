@@ -9,12 +9,12 @@
     <Grid>
         <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" x:Name="BooksGataGrid" AutoGenerateColumns="False" Margin="10,104,249,8" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" BorderBrush="#19000000" Background="Gainsboro">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Шифр" Binding="{Binding code}" Width="*"/>
-                <DataGridTextColumn Header="Автор" Binding="{Binding author}" Width="*"/>
-                <DataGridTextColumn Header="Назва книги" Binding="{Binding title}" Width="*"/>
-                <DataGridTextColumn Header="Рік видання" Binding="{Binding year}" Width="*"/>
-                <DataGridTextColumn Header="Стелаж" Binding="{Binding rack}" Width="*"/>
-                <DataGridTextColumn Header="Полиця" Binding="{Binding shelf}" Width="*"/>
+                <DataGridTextColumn Header="Шифр" Binding="{Binding code}" Width="Auto"/>
+                <DataGridTextColumn Header="Автор" Binding="{Binding author}" Width="Auto"/>
+                <DataGridTextColumn Header="Назва книги" Binding="{Binding title}" Width="Auto"/>
+                <DataGridTextColumn Header="Рік видання" Binding="{Binding year}" Width="Auto"/>
+                <DataGridTextColumn Header="Стелаж" Binding="{Binding rack}" Width="Auto"/>
+                <DataGridTextColumn Header="Полиця" Binding="{Binding shelf}" Width="Auto"/>
                 <DataGridTemplateColumn Header="" Width="Auto" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
