@@ -45,52 +45,59 @@ namespace BookManager
             Title = "Додати книгу";
         }
 
-        private void AddEditButton_Click(object sender, RoutedEventArgs e)
-        {
-            string connectionString = "server=localhost;port=3306;user=root;password=Hkle4X!5di_3k;database=bookmanager;";
-            using var connection = new MySqlConnection(connectionString);
-            connection.Open();
+		private void AddEditButton_Click(object sender, RoutedEventArgs e)
+		{
 
-            if (isEdit)
-            {
-                Brush redBrush = new SolidColorBrush(Color.FromRgb(255, 102, 102));
-                bool haveError = false;
-                if (AuthorTextBox.Text == "")
-                {
-                    MessageBox.Show("Поле 'Автор' не може бути пустим.", "Помилка введення");
-                    AuthorTextBox.Background = redBrush;
-                    haveError = true;
-                }
-                if (TitleTextBox.Text == "")
-                {
-                    MessageBox.Show("Поле 'Назва' не може бути пустим.", "Помилка введення");
-                    TitleTextBox.Background = redBrush;
-                    haveError = true;
-                }
-                if (!int.TryParse(YearTextBox.Text, out int year))
-                {
-                    MessageBox.Show("Поле 'Рік' повинно містити число.", "Помилка введення");
-                    YearTextBox.Background = redBrush;
-                    haveError = true;
-                }
-                if (!int.TryParse(RackTextBox.Text, out int rack))
-                {
-                    MessageBox.Show("Поле 'Стелаж' повинно містити число.", "Помилка введення");
-                    RackTextBox.Background = redBrush;
-                    haveError = true;
-                }
+			Globals.connection.Open();
+			Brush whiteBrush = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+			AuthorTextBox.Background = whiteBrush;
+			TitleTextBox.Background = whiteBrush;
+			YearTextBox.Background = whiteBrush;
+			RackTextBox.Background = whiteBrush;
+			ShelfTextBox.Background = whiteBrush;
 
-                if (!int.TryParse(ShelfTextBox.Text, out int shelf))
-                {
-                    MessageBox.Show("Поле 'Полиця' повинно містити число.", "Помилка введення");
-                    ShelfTextBox.Background = redBrush;
-                    haveError = true;
-                }
-                if(haveError == true)
-                {
-                    return;
-                }
-                string updateQuery = @"
+
+			Brush redBrush = new SolidColorBrush(Color.FromRgb(255, 102, 102));
+			bool haveError = false;
+			if (AuthorTextBox.Text == "")
+			{
+				AuthorTextBox.Background = redBrush;
+				MessageBox.Show("Поле 'Автор' не може бути пустим.", "Помилка введення");
+				haveError = true;
+			}
+			else if (TitleTextBox.Text == "")
+			{
+				TitleTextBox.Background = redBrush;
+				MessageBox.Show("Поле 'Назва' не може бути пустим.", "Помилка введення");
+				haveError = true;
+			}
+			else if (!int.TryParse(YearTextBox.Text, out int year))
+			{
+				YearTextBox.Background = redBrush;
+				MessageBox.Show("Поле 'Рік' повинно містити число.", "Помилка введення");
+				
+				haveError = true;
+			}
+			else if (!int.TryParse(RackTextBox.Text, out int rack))
+			{
+				RackTextBox.Background = redBrush;
+				MessageBox.Show("Поле 'Стелаж' повинно містити число.", "Помилка введення");
+				
+				haveError = true;
+			}
+			else if (!int.TryParse(ShelfTextBox.Text, out int shelf))
+			{
+				ShelfTextBox.Background = redBrush;
+				MessageBox.Show("Поле 'Полиця' повинно містити число.", "Помилка введення");
+				
+				haveError = true;
+			}
+			if (haveError == true)
+			{
+				Globals.connection.Close();
+				return;
+			}
+			string updateQuery = @"
                     UPDATE books 
                     SET author = @Author,
                         title = @Title,
@@ -98,33 +105,34 @@ namespace BookManager
                         rack = @Rack,
                         shelf = @Shelf
                     WHERE code = @Code";
-
-                using var cmd = new MySqlCommand(updateQuery, connection);
-                cmd.Parameters.AddWithValue("@Author", AuthorTextBox.Text);
-                cmd.Parameters.AddWithValue("@Title", TitleTextBox.Text);
-                cmd.Parameters.AddWithValue("@Year", int.Parse(YearTextBox.Text));
-                cmd.Parameters.AddWithValue("@Rack", int.Parse(RackTextBox.Text));
-                cmd.Parameters.AddWithValue("@Shelf", int.Parse(ShelfTextBox.Text));
-                cmd.Parameters.AddWithValue("@Code", selectedBook.code);
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                string insertQuery = @"
+			if (isEdit)
+			{
+				using var cmd = new MySqlCommand(updateQuery, Globals.connection);
+				cmd.Parameters.AddWithValue("@Author", AuthorTextBox.Text);
+				cmd.Parameters.AddWithValue("@Title", TitleTextBox.Text);
+				cmd.Parameters.AddWithValue("@Year", int.Parse(YearTextBox.Text));
+				cmd.Parameters.AddWithValue("@Rack", int.Parse(RackTextBox.Text));
+				cmd.Parameters.AddWithValue("@Shelf", int.Parse(ShelfTextBox.Text));
+				cmd.Parameters.AddWithValue("@Code", selectedBook.code);
+				cmd.ExecuteNonQuery();
+			}
+			else
+			{
+				string insertQuery = @"
                     INSERT INTO books (author, title, year, rack, shelf)
                     VALUES (@Author, @Title, @Year, @Rack, @Shelf)";
 
-                using var cmd = new MySqlCommand(insertQuery, connection);
-                cmd.Parameters.AddWithValue("@Author", AuthorTextBox.Text);
-                cmd.Parameters.AddWithValue("@Title", TitleTextBox.Text);
-                cmd.Parameters.AddWithValue("@Year", int.Parse(YearTextBox.Text));
-                cmd.Parameters.AddWithValue("@Rack", int.Parse(RackTextBox.Text));
-                cmd.Parameters.AddWithValue("@Shelf", int.Parse(ShelfTextBox.Text));
-                cmd.ExecuteNonQuery();
-            }
-
-            this.DialogResult = true;
-            this.Close();
-        }
+				using var cmd = new MySqlCommand(insertQuery, Globals.connection);
+				cmd.Parameters.AddWithValue("@Author", AuthorTextBox.Text);
+				cmd.Parameters.AddWithValue("@Title", TitleTextBox.Text);
+				cmd.Parameters.AddWithValue("@Year", int.Parse(YearTextBox.Text));
+				cmd.Parameters.AddWithValue("@Rack", int.Parse(RackTextBox.Text));
+				cmd.Parameters.AddWithValue("@Shelf", int.Parse(ShelfTextBox.Text));
+				cmd.ExecuteNonQuery();
+			}
+			Globals.connection.Close();
+			this.DialogResult = true;
+			this.Close();
+		}
     }
 }

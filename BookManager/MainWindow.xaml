@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:BookManager"
         mc:Ignorable="d" ResizeMode="NoResize"
         Title="Колекція книголюба" Height="720" Width="1080" Background="Azure">
@@ -10,17 +11,21 @@
         <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" x:Name="BooksGataGrid" AutoGenerateColumns="False" Margin="10,104,249,8" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" BorderBrush="#19000000" Background="Gainsboro">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Шифр" Binding="{Binding code}" Width="Auto"/>
-                <DataGridTextColumn Header="Автор" Binding="{Binding author}" Width="Auto"/>
-                <DataGridTextColumn Header="Назва книги" Binding="{Binding title}" Width="Auto"/>
-                <DataGridTextColumn Header="Рік видання" Binding="{Binding year}" Width="Auto"/>
-                <DataGridTextColumn Header="Стелаж" Binding="{Binding rack}" Width="Auto"/>
-                <DataGridTextColumn Header="Полиця" Binding="{Binding shelf}" Width="Auto"/>
+                <DataGridTextColumn Header="Автор" Binding="{Binding author}" Width="*"/>
+                <DataGridTextColumn Header="Назва книги" Binding="{Binding title}" Width="*"/>
+                <DataGridTextColumn Header="Рік видання" Binding="{Binding year}" Width="*"/>
+                <DataGridTextColumn Header="Стелаж" Binding="{Binding rack}" Width="*"/>
+                <DataGridTextColumn Header="Полиця" Binding="{Binding shelf}" Width="*"/>
                 <DataGridTemplateColumn Header="" Width="Auto" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button x:Name="EditButton" Background="#FFE9FF00" Click="EditButton_Click"/>
-                                <Button x:Name="DeleteButton" Background="#FFFF5252" Click="DeleteButton_Click"/>
+                                <Button x:Name="EditButton" Background="#FFE9FF00" Click="EditButton_Click">
+                                <materialDesign:PackIcon x:Name="Edit" Kind="Edit" Foreground="Black"/>
+                                </Button>
+                                <Button x:Name="DeleteButton" Background="#FFFF5252" Click="DeleteButton_Click">
+                                    <materialDesign:PackIcon x:Name="Delete" Kind="Delete" Foreground="Black"/>
+                                </Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

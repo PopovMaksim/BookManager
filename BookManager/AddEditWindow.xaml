@@ -18,7 +18,7 @@ Title="Додати / Редагувати книгу" Height="350" Width="900" 
         </Grid.RowDefinitions>
 
         <!-- DataGrid -->
-        <DataGrid x:Name="BooksDataGrid"
+        <DataGrid x:Name="AddEditGrid"
                   Grid.Row="0"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
@@ -29,12 +29,12 @@ Title="Додати / Редагувати книгу" Height="350" Width="900" 
                   Background="Gainsboro"
                   BorderBrush="#19000000">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Шифр" Binding="{Binding code}" Width="Auto" />
-                <DataGridTextColumn Header="Автор" Binding="{Binding author}" Width="Auto" />
-                <DataGridTextColumn Header="Назва книги" Binding="{Binding title}" Width="Auto" />
-                <DataGridTextColumn Header="Рік видання" Binding="{Binding year}" Width="Auto" />
-                <DataGridTextColumn Header="Стелаж" Binding="{Binding rack}" Width="Auto" />
-                <DataGridTextColumn Header="Полиця" Binding="{Binding shelf}" Width="Auto" />
+                <DataGridTextColumn Header="Шифр" Binding="{Binding code}" Width="*" />
+                <DataGridTextColumn Header="Автор" Binding="{Binding author}" Width="*" />
+                <DataGridTextColumn Header="Назва книги" Binding="{Binding title}" Width="*" />
+                <DataGridTextColumn Header="Рік видання" Binding="{Binding year}" Width="*" />
+                <DataGridTextColumn Header="Стелаж" Binding="{Binding rack}" Width="*" />
+                <DataGridTextColumn Header="Полиця" Binding="{Binding shelf}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
 
@@ -50,11 +50,11 @@ Title="Додати / Редагувати книгу" Height="350" Width="900" 
             </Grid.ColumnDefinitions>
 
             <TextBlock x:Name="CodeTextBlock" Grid.Column="0" Text="{Binding Code}" VerticalAlignment="Center" Margin="4" FontWeight="Bold" />
-            <TextBox x:Name="AuthorTextBox" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="4" />
-            <TextBox x:Name="TitleTextBox" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="4" />
-            <TextBox x:Name="YearTextBox" Grid.Column="3" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="4" />
-            <TextBox x:Name="RackTextBox" Grid.Column="4" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="4" />
-            <TextBox x:Name="ShelfTextBox" Grid.Column="5" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="4" />
+            <TextBox x:Name="AuthorTextBox" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="48,4,4,4" />
+            <TextBox x:Name="TitleTextBox" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="1,4,143,4" />
+            <TextBox x:Name="YearTextBox" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="148,4,0,4" />
+            <TextBox x:Name="RackTextBox" Grid.Column="3" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5,4,47,4" Grid.ColumnSpan="2" />
+            <TextBox x:Name="ShelfTextBox" Grid.Column="4" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="53,4,4,4" Grid.ColumnSpan="2" />
         </Grid>
 
         <!-- Кнопка -->

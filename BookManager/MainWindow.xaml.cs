@@ -32,29 +32,31 @@ namespace BookManager
 		public void loadData()
 		{
             books.Clear();
-            string connectionString = "server=localhost;port=3306;user=root;password=Hkle4X!5di_3;database=bookmanager;";
-            using var connection = new MySqlConnection(connectionString);
+            string connectionString = "server=localhost;port=3306;user=root;password=Hkle4X!5di_3k;database=bookmanager;";
+            Globals.connection = new MySqlConnection(connectionString);
 
             try
             {
-                connection.Open();
+				Globals.connection.Open();
                 string query = "SELECT * FROM books;";
-                using var cmd = new MySqlCommand(query, connection);
+                using var cmd = new MySqlCommand(query, Globals.connection);
                 using var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    books.Add(new Book
-                    {
-                        code = reader.GetInt32("code"),
-                        author = reader.GetString("author"),
-                        title = reader.GetString("title"),
-                        year = reader.GetInt32("year"),
-                        rack = reader.GetInt32("rack"),
-                        shelf = reader.GetInt32("shelf")
-                    });
+					books.Add(new Book()
+					{
+						code = reader.GetInt32("code"),
+						 author=reader.GetString("author"),
+						 title=reader.GetString("title"),
+						 year=reader.GetInt32("year"),
+						 rack=reader.GetInt32("rack"),
+						 shelf=reader.GetInt32("shelf")
+					}
+						);
 
                 }
+				Globals.connection.Close();
             }
             catch (MySqlException sqlEx)
             {
@@ -86,8 +88,9 @@ namespace BookManager
 
 		private void AddButton_Click(object sender, RoutedEventArgs e)
 		{
+
 			AddEditWindow addWindow = new AddEditWindow();
-            if (addWindow.ShowDialog() == true)
+			if (addWindow.ShowDialog() == true)
             {
                loadData();
             }
@@ -97,15 +100,13 @@ namespace BookManager
             DeleteWindow deleteWindow = new DeleteWindow();
             if (deleteWindow.ShowDialog() == true)
             {
-                string connectionString = "server=localhost;port=3306;user=root;password=Hkle4X!5di_3k;database=bookmanager;";
-                using var connection = new MySqlConnection(connectionString);
                 Button button = sender as Button;
                 Book selectedBook = button.DataContext as Book;
                 try
                 {
-                    connection.Open();
+                    Globals.connection.Open();
                     string deleteQuery = "DELETE FROM books WHERE code = @Code";
-                    using var command = new MySqlCommand(deleteQuery, connection);
+                    using var command = new MySqlCommand(deleteQuery, Globals.connection);
                     command.Parameters.AddWithValue("@Code", selectedBook.code);
                     int rowsAffected = command.ExecuteNonQuery();
 
@@ -118,7 +119,8 @@ namespace BookManager
                     {
                         MessageBox.Show("Книгу не знайдено або вже видалена.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                }
+					Globals.connection.Close();
+				}
                 catch (Exception ex)
                 {
                     MessageBox.Show("Помилка при видаленні: " + ex.Message, "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -132,13 +134,18 @@ namespace BookManager
 
 
 
-	public class Book {
-		public required int code { get; set; }
-		public required string author { get; set; }
-		public required string title { get; set; }
-		public required int year { get; set; }
-		public required int rack { get; set; }
-		public required int shelf { get; set; }
+	public class Book
+	{
+
+		public Book() {}
+
+		public Book(int code) { this.code = code; }
+		public  int code { get; set; }
+		public string author { get; set; } = "";
+		public string title { get; set; } = "";
+		public int year { get; set; } = -1;
+		public  int rack { get; set; } = -1;
+		public  int shelf { get; set; } = -1;
 	}
 
 	public class Authorization
@@ -167,7 +174,8 @@ namespace BookManager
 	public static class Globals
 	{
 		public static Authorization mainAuthorization = new Authorization();
-		
+		public static ObservableCollection<Book> book_template = new ObservableCollection<Book>();
+		public static MySqlConnection connection;
 	}
 
 
