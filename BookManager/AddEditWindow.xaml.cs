@@ -59,41 +59,44 @@ namespace BookManager
 
 			Brush redBrush = new SolidColorBrush(Color.FromRgb(255, 102, 102));
 			bool haveError = false;
+			string errors = "";
 			if (AuthorTextBox.Text == "")
 			{
+				errors = errors + "Поле 'Автор' не може бути пустим.\n";
 				AuthorTextBox.Background = redBrush;
-				MessageBox.Show("Поле 'Автор' не може бути пустим.", "Помилка введення");
+
 				haveError = true;
 			}
-			else if (TitleTextBox.Text == "")
+			if (TitleTextBox.Text == "")
 			{
 				TitleTextBox.Background = redBrush;
-				MessageBox.Show("Поле 'Назва' не може бути пустим.", "Помилка введення");
+				errors = errors + "Поле 'Назва' не може бути пустим.\n";
 				haveError = true;
 			}
-			else if (!int.TryParse(YearTextBox.Text, out int year))
+			if (!int.TryParse(YearTextBox.Text, out int year))
 			{
 				YearTextBox.Background = redBrush;
-				MessageBox.Show("Поле 'Рік' повинно містити число.", "Помилка введення");
-				
+				errors = errors + "Поле 'Рік' повинно містити число.\n";
+
 				haveError = true;
 			}
-			else if (!int.TryParse(RackTextBox.Text, out int rack))
+			if (!int.TryParse(RackTextBox.Text, out int rack))
 			{
 				RackTextBox.Background = redBrush;
-				MessageBox.Show("Поле 'Стелаж' повинно містити число.", "Помилка введення");
-				
+				errors = errors + "Поле 'Стелаж' повинно містити число.\n";
+
 				haveError = true;
 			}
-			else if (!int.TryParse(ShelfTextBox.Text, out int shelf))
+			if (!int.TryParse(ShelfTextBox.Text, out int shelf))
 			{
 				ShelfTextBox.Background = redBrush;
-				MessageBox.Show("Поле 'Полиця' повинно містити число.", "Помилка введення");
-				
+				errors = errors + "Поле 'Полиця' повинно містити число.\n";
+
 				haveError = true;
 			}
 			if (haveError == true)
 			{
+				MessageBox.Show(errors, "Помилка введення");
 				Globals.connection.Close();
 				return;
 			}
