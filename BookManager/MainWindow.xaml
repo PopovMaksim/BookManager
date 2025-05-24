@@ -42,8 +42,8 @@
           Background="LightBlue"
           FontWeight="Bold"
           ExpandDirection="Down"
-          Margin="851,104,10,188">
-            <Grid Background="#FFE5E5E5" Margin="10">
+          Margin="0,104,10,0" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right" Width="219">
+            <Grid Background="#FFE5E5E5" Margin="0,0,0,-487">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -76,10 +76,8 @@
                 Background="Red"
                 Foreground="White"
                 FontWeight="Bold"
-                Click="SearchButton_Click"
-                Height="40"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Stretch"/>
+                Click="SearchButton_Click" Margin="0,18,0,0" Height="32" VerticalAlignment="Top"/>
+                <Label Content="* щоб вивести всю колекцію, приберіть всі фільтри і натисніть &quot;Пошук&quot;" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="18" Width="219" FontSize="6" Foreground="#7F000000"/>
             </Grid>
         </Expander>
 

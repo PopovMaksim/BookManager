@@ -224,8 +224,10 @@ namespace BookManager
         {
             if (SearchFieldsPanel.Children.Count == 0)
             {
-                MessageBox.Show($"Не було вибрано ніякого фільтра.");
-                return;
+                //MessageBox.Show($"Не було вибрано ніякого фільтра.");
+				BooksGataGrid.ItemsSource = books;
+
+				return;
             }
             author = "";
             title = "";
