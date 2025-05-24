@@ -313,7 +313,8 @@ namespace BookManager
 				}
 			}
 			BooksGataGrid.ItemsSource = filtredB;
-
+			if (filtredB.Count==0)
+				MessageBox.Show($"Не було знайдено книг, що відповідають вибраним критеріям");
 
 		}
 
