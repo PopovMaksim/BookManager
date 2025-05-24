@@ -21,7 +21,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button x:Name="EditButton" Background="#FFE9FF00" Click="EditButton_Click">
-                                <materialDesign:PackIcon x:Name="Edit" Kind="Edit" Foreground="Black"/>
+                                    <materialDesign:PackIcon x:Name="Edit" Kind="Edit" Foreground="Black"/>
                                 </Button>
                                 <Button x:Name="DeleteButton" Background="#FFFF5252" Click="DeleteButton_Click">
                                     <materialDesign:PackIcon x:Name="Delete" Kind="Delete" Foreground="Black"/>
@@ -38,10 +38,48 @@
         <Button x:Name="AddButton" Content="+" UseLayoutRounding="True" Background="#FF6129C3" Foreground="AliceBlue" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Margin="10,64,0,0" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,3" Click="AddButton_Click" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="35"/>
         <Button  Content="Авторизація" Click="AuthButton_Click" UseLayoutRounding="True" HorizontalAlignment="Left" Margin="881,23,0,0" VerticalAlignment="Top" Height="43" Width="175" Background="#FF6129C3" Foreground="AliceBlue" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
         <Button  Content="Зберегти" UseLayoutRounding="True" HorizontalAlignment="Left" Margin="668,23,0,0" VerticalAlignment="Top" Height="43" Width="163" Background="#FF14D997" Foreground="AliceBlue" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
-        <Expander HorizontalAlignment="Left" Height="49" Header="Пошук" Margin="851,104,0,0" VerticalAlignment="Top" Width="205" Background="LightGray" FontFamily="Agency FB" FontWeight="Bold">
-            <Grid Background="#FFE5E5E5" Margin="0,1,0,-48">
-                <Button Content="+" UseLayoutRounding="True" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="30" Background="#FF6129C3" Foreground="AliceBlue" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Margin="172,9,0,0" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,2"/>
+        <Expander Header="Пошук книги за параметрами"
+          Background="LightBlue"
+          FontWeight="Bold"
+          ExpandDirection="Down"
+          Margin="851,104,10,188">
+            <Grid Background="#FFE5E5E5" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
+                <StackPanel x:Name="SearchFieldsPanel"
+                    Orientation="Vertical"
+                    Margin="0,0,0,10"
+                    Grid.Row="0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"/>
+
+                <Button x:Name="SearchAddButton"
+                Grid.Row="1"
+                Content="+"
+                Width="30"
+                Height="30"
+                Background="#FF777777"
+                Foreground="White"
+                FontWeight="Bold"
+                Click="SearchAddButton_Click"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="0,0,0,10"/>
+
+                <Button x:Name="SearchButton"
+                Grid.Row="2"
+                Content="Пошук"
+                Background="Red"
+                Foreground="White"
+                FontWeight="Bold"
+                Click="SearchButton_Click"
+                Height="40"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Stretch"/>
             </Grid>
         </Expander>
 

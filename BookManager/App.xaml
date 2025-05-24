@@ -38,13 +38,13 @@
                 <Setter Property="BorderThickness" Value="{Binding GridLinesVisibility, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                 <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Header.Foreground}"/>
                 <Setter Property="Padding" Value="{Binding (wpf:DataGridAssist.ColumnHeaderPadding), RelativeSource={RelativeSource Mode=Self}}"/>
-                
+
                 <Setter Property="TextBlock.FontWeight" Value="Medium"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                 <Setter Property="TextBlock.FontSize" Value="15"/>
                 <Setter Property="TextBlock.Foreground" Value="Black"/>
                 <Setter Property="Background" Value="DarkGray"/>
             </Style>
-    </ResourceDictionary>
+        </ResourceDictionary>
   </Application.Resources>
 </Application>
