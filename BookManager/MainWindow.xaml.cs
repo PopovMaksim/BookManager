@@ -157,18 +157,20 @@ namespace BookManager
             comboBox.Items.Add(new ComboBoxItem { Content = "Рік видання" });
             comboBox.SelectedIndex = 0;
 
-            // Кнопка видалення
-            Button removeButton = new()
-            {
-                Content = "❌",
-                Width = 23,
-                Height = 23,
-                VerticalAlignment = VerticalAlignment.Center,
-                ToolTip = "Видалити"
-            };
+			// Кнопка видалення
+			Button removeButton = new()
+			{
+				Background = Brushes.IndianRed,
+				Content = "❌",
+				Width = 23,
+				Height = 23,
+				VerticalAlignment = VerticalAlignment.Center,
+				ToolTip = "Видалити",
+				Padding = new Thickness(0)
+			};
             removeButton.Click += (s, args) => SearchFieldsPanel.Children.Remove(searchFilterPanel);
 
-            headerPanel.Children.Add(comboBox);
+			headerPanel.Children.Add(comboBox);
             headerPanel.Children.Add(removeButton);
 
             // Панель для введення (TextBox'и)
@@ -201,7 +203,7 @@ namespace BookManager
             searchFilterPanel.Children.Add(inputFieldsPanel);
 
             SearchFieldsPanel.Children.Add(searchFilterPanel);
-        }
+		}
 
         // Створення текстбокса
         private TextBox CreateTextBox(string placeholder)
@@ -232,81 +234,88 @@ namespace BookManager
             author = "";
             title = "";
             year = null;
-           
-            // Зчитування інформації з текстбоксів
-            foreach (var child in SearchFieldsPanel.Children)
-            {
-                if (child is StackPanel filterPanel && filterPanel.Children.Count == 2)
-                {
-                    // 1. headerPanel (ComboBox + кнопка)
-                    StackPanel headerPanel = filterPanel.Children[0] as StackPanel;
-                    // 2. inputFieldsPanel (TextBox-и)
-                    StackPanel inputFieldsPanel = filterPanel.Children[1] as StackPanel;
 
-                    if (headerPanel == null || inputFieldsPanel == null)
-                        continue;
+			ObservableCollection<Book> filtredB = new ObservableCollection<Book>();
+			for (int i = 0; i < books.Count(); i++)
+			{
+				// Зчитування інформації з текстбоксів
+				foreach (var child in SearchFieldsPanel.Children)
+				{
+					if (child is StackPanel filterPanel && filterPanel.Children.Count == 2)
+					{
+						// 1. headerPanel (ComboBox + кнопка)
+						StackPanel headerPanel = filterPanel.Children[0] as StackPanel;
+						// 2. inputFieldsPanel (TextBox-и)
+						StackPanel inputFieldsPanel = filterPanel.Children[1] as StackPanel;
 
-                    ComboBox comboBox = headerPanel.Children.OfType<ComboBox>().FirstOrDefault();
-                    if (comboBox == null)
-                        continue;
+						if (headerPanel == null || inputFieldsPanel == null)
+							continue;
 
-                    string selected = (comboBox.SelectedItem as ComboBoxItem)?.Content?.ToString();
+						ComboBox comboBox = headerPanel.Children.OfType<ComboBox>().FirstOrDefault();
+						if (comboBox == null)
+							continue;
 
-                    foreach (var field in inputFieldsPanel.Children)
-                    {
-                        if (field is TextBox tb && tb.Tag is string tag)
-                        {
-                            string value = tb.Text.Trim();
+						string selected = (comboBox.SelectedItem as ComboBoxItem)?.Content?.ToString();
 
-                            if (tag == "Автор")
-                                author = value;
-                            else if (tag == "Назва")
-                            {
-                                if (value == "")
-                                {
-                                    MessageBox.Show($"Не було вибрано назву для пошуку.");
-                                    return;
-                                }
-                                title = value;
-                            }
-                                
-                            else if (tag == "Рік")
-                            {
-                                if(!(int.TryParse(value, out int parsedYear)))
-                                {
-                                    MessageBox.Show($"Рік для пошуку введено некоректно.");
-                                    return;
-                                }
-                                year = parsedYear;
-                            }
-                                
-                        }
-                    }
-                }
-            }
+						foreach (var field in inputFieldsPanel.Children)
+						{
+							if (field is TextBox tb && tb.Tag is string tag)
+							{
+								string value = tb.Text.Trim();
 
-            // Відбір книг за критеріями
-            ObservableCollection<Book> filtredB = new ObservableCollection<Book>();
-            for (int i = 0; i < books.Count(); i++)
-            {
-                if(title != null)
-                {
-                    if (books[i].title == title && books[i].author == author)
-                    {
-                        filtredB.Add(books[i]);
-                    }
-                }
-                if(year != null)
-                {
-                    if(books[i].year == year)
-                    {
-                        filtredB.Add(books[i]);
-                    }
-                }
-            }
-            BooksGataGrid.ItemsSource = filtredB;
+								if (tag == "Автор")
+									author = value;
+								else if (tag == "Назва")
+								{
+									if (value == "")
+									{
+										MessageBox.Show($"Не було вибрано назву для пошуку.");
+										return;
+									}
+									title = value;
+								}
 
-        }
+								else if (tag == "Рік")
+								{
+									if (!(int.TryParse(value, out int parsedYear)))
+									{
+										MessageBox.Show($"Рік для пошуку введено некоректно.");
+										return;
+									}
+									year = parsedYear;
+								}
+
+							}
+						}
+					}
+
+
+
+					// Відбір книг за критеріями
+
+
+					if (title != null)
+					{
+						if (books[i].title == title && books[i].author == author)
+						{
+							filtredB.Add(books[i]);
+							continue;
+						}
+					}
+					if (year != null)
+					{
+						if (books[i].year == year)
+						{
+							filtredB.Add(books[i]);
+							continue;
+						}
+					}
+				}
+			}
+			BooksGataGrid.ItemsSource = filtredB;
+
+
+		}
 
     }
 
